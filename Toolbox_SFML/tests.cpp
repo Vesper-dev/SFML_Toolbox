@@ -1,10 +1,9 @@
-#include <SFML/Graphics.hpp>
+#include "Source files\Toolbox.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+	Toolbox::TextButton button(window, sf::Vector2f(100, 100), "Przycisk");
 
 	while (window.isOpen())
 	{
@@ -13,10 +12,11 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			button.update(event);
 		}
 
-		window.clear();
-		window.draw(shape);
+		window.clear(sf::Color::White);
+		button.draw();
 		window.display();
 	}
 }

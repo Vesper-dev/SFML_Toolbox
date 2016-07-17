@@ -249,3 +249,5 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/Debug/Toolbox_SFML.exe
+/Toolbox_SFML/Debug

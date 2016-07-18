@@ -6,6 +6,7 @@ void Toolbox::TextButton::setPrimaryDimensions
 	window = &_window;
 	position = _position;
 	name = _name;
+	key = sf::Keyboard::Return;
 }
 
 void Toolbox::TextButton::updateMouse
@@ -36,7 +37,7 @@ void Toolbox::TextButton::updateMouseButton
 void Toolbox::TextButton::updateKeyboard
 (sf::Event &_event)
 {
-	if (isKeyPressed(_event) == true && _event.key.code == sf::Keyboard::Return)
+	if (isKeyPressed(_event) == true && _event.key.code == key)
 		changeButtonState();
 }
 
@@ -91,6 +92,12 @@ void Toolbox::TextButton::setSelectedTextColor
 (const sf::Color _color)
 {
 	selectedTextColor = _color;
+}
+
+void Toolbox::TextButton::setSelectingKey
+(const sf::Keyboard::Key _newSelectingKey)
+{
+	key = _newSelectingKey;
 }
 
 void Toolbox::TextButton::update

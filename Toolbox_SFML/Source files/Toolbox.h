@@ -26,6 +26,7 @@ public:
 		void setTextOptions(const std::string _fontName, const sf::Color _textColor, const sf::Color _selectedTextColor, const int _fontSize);
 		void setTextColor(const sf::Color _color);
 		void setSelectedTextColor(const sf::Color _color);
+		void setSelectingKey(const sf::Keyboard::Key _newSelectingKey);
 		void update(sf::Event &_event);
 		void draw();
 	};

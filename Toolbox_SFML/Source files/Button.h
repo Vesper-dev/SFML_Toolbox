@@ -31,6 +31,7 @@ public:
 protected:
 	sf::RenderWindow *window;
 	sf::Vector2f position;
+	sf::Keyboard::Key key;
 	bool isMouseActive;
 	bool isKeyboardActive;
 	bool isSelected;

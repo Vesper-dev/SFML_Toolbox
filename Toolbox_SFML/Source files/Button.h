@@ -20,6 +20,15 @@ public:
 	{
 		isLaunched = newState;
 	}
+	void setPosition(sf::Vector2f _position)
+	{
+		isChangeToUpdate = true;
+		position = _position;
+	}
+	sf::Vector2f getPosition()
+	{
+		return position;
+	}
 	bool isButtonEnabled()const
 	{
 		return isLaunched;
@@ -36,11 +45,13 @@ protected:
 	bool isKeyboardActive;
 	bool isSelected;
 	bool isLaunched;
+	bool isChangeToUpdate;
 	void clearAllStates()
 	{
 		isMouseActive = true;
 		isKeyboardActive = true;
-		isSelected = true;
-		isLaunched = true;
+		isSelected = false;
+		isLaunched = false;
+		isChangeToUpdate = false;
 	}
 };

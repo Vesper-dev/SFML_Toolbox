@@ -85,12 +85,14 @@ void Toolbox::TextButton::setTextOptions
 void Toolbox::TextButton::setTextColor
 (const sf::Color _color)
 {
+	isChangeToUpdate = true;
 	textColor = _color;
 }
 
 void Toolbox::TextButton::setSelectedTextColor
 (const sf::Color _color)
 {
+	isChangeToUpdate = true;
 	selectedTextColor = _color;
 }
 
@@ -105,7 +107,13 @@ void Toolbox::TextButton::update
 {
 	updateMouse(_event);
 	updateKeyboard(_event);
-	updateTextColor();
+	if (isChangeToUpdate == true)
+	{
+		updateTextColor();
+		text.setPosition(position);
+		isChangeToUpdate = false;
+	}
+	
 }
 
 void Toolbox::TextButton::draw()

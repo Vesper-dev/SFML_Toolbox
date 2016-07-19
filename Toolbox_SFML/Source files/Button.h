@@ -4,26 +4,25 @@
 class Button
 {
 public:
-	void setMouseState(bool newState)
+	void setMouseState(bool _newState)
 	{
-		isMouseActive = newState;
+		isMouseActive = _newState;
 	}
-	void setKeyboardState(bool newState)
+	void setKeyboardState(bool _newState)
 	{
-		isKeyboardActive = newState;
+		isKeyboardActive = _newState;
 	}
-	void setSelectedState(bool newState)
+	void setSelectedState(bool _newState)
 	{
-		isSelected = newState;
+		isSelected = _newState;
 	}
-	void setButtonState(bool newState)
+	void setButtonState(bool _newState)
 	{
-		isLaunched = newState;
+		isLaunched = _newState;
 	}
-	void setPosition(sf::Vector2f _position)
+	void setPosition(sf::Vector2f _newState)
 	{
-		isChangeToUpdate = true;
-		position = _position;
+		position = _newState;
 	}
 	sf::Vector2f getPosition()
 	{
@@ -45,13 +44,11 @@ protected:
 	bool isKeyboardActive;
 	bool isSelected;
 	bool isLaunched;
-	bool isChangeToUpdate;
 	void clearAllStates()
 	{
 		isMouseActive = true;
 		isKeyboardActive = true;
 		isSelected = false;
 		isLaunched = false;
-		isChangeToUpdate = false;
 	}
 };

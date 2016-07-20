@@ -9,51 +9,6 @@ void Toolbox::TextButton::setPrimaryDimensions
 	key = sf::Keyboard::Return;
 }
 
-void Toolbox::TextButton::updateMouse
-(sf::Event &_event)
-{
-	if (isMouseActive == true && isMouseOnButton() == true)
-		updateMouseButton(_event);
-}
-
-bool Toolbox::TextButton::isMouseOnButton()
-{
-	sf::Vector2f mousePosition{ sf::Vector2f(sf::Mouse::getPosition(*window)) };
-	if (text.getGlobalBounds().contains(mousePosition) == true) {
-		isSelected = true;
-		return true;
-	}
-	isSelected = false;
-	return false;
-}
-
-void Toolbox::TextButton::updateMouseButton
-(sf::Event &_event)
-{
-	if (_event.type == sf::Event::MouseButtonReleased && _event.mouseButton.button == sf::Mouse::Left)
-		changeButtonState();
-}
-
-void Toolbox::TextButton::updateKeyboard
-(sf::Event &_event)
-{
-	if (isKeyPressed(_event) == true && _event.key.code == key)
-		changeButtonState();
-}
-
-bool Toolbox::TextButton::isKeyPressed
-(sf::Event &_event)const
-{
-	if (isKeyboardActive == true && isSelected == true && _event.type == sf::Event::KeyPressed)
-		return true;
-	return false;
-}
-
-void Toolbox::TextButton::changeButtonState()
-{
-	isLaunched = isLaunched ? false : true;
-}
-
 void Toolbox::TextButton::updateTextColor()
 {
 	if (isSelected == true)
@@ -94,16 +49,10 @@ void Toolbox::TextButton::setSelectedTextColor
 	selectedTextColor = _color;
 }
 
-void Toolbox::TextButton::setSelectingKey
-(const sf::Keyboard::Key _newSelectingKey)
-{
-	key = _newSelectingKey;
-}
-
 void Toolbox::TextButton::update
 (sf::Event &_event)
 {
-	updateMouse(_event);
+	updateMouse(_event, text);
 	updateKeyboard(_event);
 	updateTextColor();
 	text.setPosition(position);

@@ -45,7 +45,11 @@ bool textButtonTest(sf::RenderWindow &window, sf::Event &event, Toolbox::TextBut
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-	Toolbox::TextButton button(window, sf::Vector2f(100, 100), "Przycisk");
+	sf::Texture selected, unselected;
+	selected.loadFromFile("selected.png");
+	unselected.loadFromFile("unselected.png");
+	Toolbox::TextureButton button(window, sf::Vector2f(100, 100), selected, unselected);
+	button.setSelectedButtonTexture(selected);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -55,11 +59,6 @@ int main()
 				window.close();
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (textButtonTest(window, event, button) == true)
-				std::cout << "All test OK\n";
-			else
-				std::cout << "TextBox test failed";
-			window.close();
 			button.update(event);
 		}
 

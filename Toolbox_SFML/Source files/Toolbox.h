@@ -25,10 +25,12 @@ public:
 	};
 	class TextureButton :public Button
 	{
-		void setPrimaryDimensions(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture _selected, const sf::Texture _unselected);
+		void setPrimaryDimensions(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture &_selected, const sf::Texture &_unselected);
 		sf::Sprite selected, unselected;
 	public:
-		TextureButton(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture _selected, const sf::Texture _unselected);
+		TextureButton(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture &_selected, const sf::Texture &_unselected);
+		void setButtonTexture(sf::Texture &_newTexture);
+		void setSelectedButtonTexture(sf::Texture &_newTexture);
 		void update(sf::Event &_event);
 		void draw();
 	};

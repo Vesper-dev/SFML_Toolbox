@@ -1,7 +1,7 @@
 #pragma once
-#include "SFML\Graphics.hpp"
+#include "Box.h"
 
-class Button
+class Button :public Box
 {
 public:
 	void setMouseState(const bool _newState)
@@ -24,14 +24,6 @@ public:
 	{
 		isLaunched = _newState;
 	}
-	void setPosition(const sf::Vector2f _newState)
-	{
-		position = _newState;
-	}
-	sf::Vector2f getPosition()
-	{
-		return position;
-	}
 	bool isButtonEnabled()const
 	{
 		return isLaunched;
@@ -42,7 +34,6 @@ public:
 	}
 protected:
 	sf::RenderWindow *window;
-	sf::Vector2f position;
 	sf::Keyboard::Key key;
 	bool isMouseActive;
 	bool isKeyboardActive;

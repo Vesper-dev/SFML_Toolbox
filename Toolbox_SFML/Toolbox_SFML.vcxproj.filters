@@ -32,5 +32,8 @@
     <ClInclude Include="Source files\Toolbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source files\Box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

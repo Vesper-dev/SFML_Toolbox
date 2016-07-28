@@ -49,7 +49,6 @@ int main()
 	selected.loadFromFile("selected.png");
 	unselected.loadFromFile("unselected.png");
 	Toolbox::TextureButton button(window, sf::Vector2f(100, 100), selected, unselected);
-	button.setSelectedButtonTexture(selected);
 	while (window.isOpen())
 	{
 		sf::Event event;

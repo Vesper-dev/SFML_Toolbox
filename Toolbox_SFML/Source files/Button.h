@@ -1,74 +1,80 @@
 #pragma once
-#include "Box.h"
+#include "SFML\Graphics.hpp"
+//#include "Toolbox.h"
 
-class Button :public Box
+using namespace sf;
+class Button 
 {
 public:
+    Button(RenderWindow& _window)
+    {
+        isMouseActive = true;
+        isKeyboardActive = true;
+        isSelected = false;
+        isLaunched = false;
+        window = &_window;
+    }
+
 	void setMouseState(const bool _newState)
 	{
 		isMouseActive = _newState;
 	}
+
 	void setKeyboardState(const bool _newState)
 	{
 		isKeyboardActive = _newState;
 	}
-	void setSelectingKey(const sf::Keyboard::Key _newSelectingKey)
+
+	void setSelectingKey(const Keyboard::Key _newSelectingKey)
 	{
 		key = _newSelectingKey;
 	}
+
 	void setSelectedState(const bool _newState)
 	{
 		isSelected = _newState;
 	}
+
 	void setButtonState(const bool _newState)
 	{
 		isLaunched = _newState;
 	}
+
 	bool isButtonEnabled()const
 	{
 		return isLaunched;
 	}
+
 	bool isButtonSelected()const
 	{
 		return isSelected;
 	}
+
 protected:
-	sf::RenderWindow *window;
-	sf::Keyboard::Key key;
+	RenderWindow *window;
+	Keyboard::Key key;
 	bool isMouseActive;
 	bool isKeyboardActive;
 	bool isSelected;
 	bool isLaunched;
-	void clearAllStates()
+
+	void updateMouse(Event &_event, bool isMouseSelecting)
 	{
-		isMouseActive = true;
-		isKeyboardActive = true;
-		isSelected = false;
-		isLaunched = false;
+        if (isMouseActive) {
+            if (isMouseSelecting == true) {
+                updateMouseButton(_event);
+                isSelected = true;
+            }
+            else {
+                updateMouseButton(_event);
+                isSelected = false;
+            }
+        }
 	}
-	void updateMouse(sf::Event &_event, sf::Text &_text)
+
+	bool isMouseOnButton(Sprite &_sprite)
 	{
-		if (isMouseActive == true && isMouseOnButton(_text) == true)
-			updateMouseButton(_event);
-	}
-	void updateMouse(sf::Event &_event, sf::Sprite &_sprite)
-	{
-		if (isMouseActive == true && isMouseOnButton(_sprite) == true)
-			updateMouseButton(_event);
-	}
-	bool isMouseOnButton(sf::Text &_text)
-	{
-		sf::Vector2f mousePosition{ sf::Vector2f(sf::Mouse::getPosition(*window)) };
-		if (_text.getGlobalBounds().contains(mousePosition) == true) {
-			isSelected = true;
-			return true;
-		}
-		isSelected = false;
-		return false;
-	}
-	bool isMouseOnButton(sf::Sprite &_sprite)
-	{
-		sf::Vector2f mousePosition{ sf::Vector2f(sf::Mouse::getPosition(*window)) };
+		Vector2f mousePosition{ Vector2f(Mouse::getPosition(*window)) };
 		if (_sprite.getGlobalBounds().contains(mousePosition) == true) {
 			isSelected = true;
 			return true;
@@ -76,22 +82,26 @@ protected:
 		isSelected = false;
 		return false;
 	}
-	void updateMouseButton(sf::Event &_event)
+
+	void updateMouseButton(Event &_event)
 	{
-		if (_event.type == sf::Event::MouseButtonReleased && _event.mouseButton.button == sf::Mouse::Left)
+		if (_event.type == Event::MouseButtonReleased && _event.mouseButton.button == Mouse::Left)
 			changeButtonState();
 	}
-	void updateKeyboard(sf::Event &_event)
+
+	void updateKeyboard(Event &_event)
 	{
 		if (isKeyPressed(_event) == true && _event.key.code == key)
 			changeButtonState();
 	}
-	bool isKeyPressed(sf::Event &_event)const
+
+	bool isKeyPressed(Event &_event)const
 	{
-		if (isKeyboardActive == true && isSelected == true && _event.type == sf::Event::KeyPressed)
+		if (isKeyboardActive == true && isSelected == true && _event.type == Event::KeyPressed)
 			return true;
 		return false;
 	}
+
 	void changeButtonState()
 	{
 		isLaunched = isLaunched ? false : true;

@@ -1,48 +1,35 @@
 #include "Toolbox.h"
 
-void Toolbox::TextureButton::setPrimaryDimensions
-(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture &_selected, const sf::Texture &_unselected)
+using namespace tb;
+
+void TextureButton::updateTexture()
 {
-	window = &_window;
-	position = _position;
-	selected.setTexture(_selected);
-	unselected.setTexture(_unselected);
-	key = sf::Keyboard::Return;
+    if (isSelected == false && getTexture() == &latterTexture)
+        setTexture(primaryTexture);
+    if (isSelected == true)
+        setTexture(latterTexture);
+    else
+        primaryTexture = *getTexture();
 }
 
-Toolbox::TextureButton::TextureButton
-(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture &_selected, const sf::Texture &_unselected)
+void TextureButton::setLatterTexture(const sf::Texture &_texture)
 {
-	clearAllStates();
-	setPrimaryDimensions(_window, _position, _selected, _unselected);
-	selected.setPosition(position);
-	unselected.setPosition(position);
+    latterTexture = _texture;
 }
 
-void Toolbox::TextureButton::setButtonTexture
-(sf::Texture &_newTexture)
+const Texture& TextureButton::getLatterTexture()
 {
-	selected.setTexture(_newTexture);
-}
-void Toolbox::TextureButton::setSelectedButtonTexture
-(sf::Texture &_newTexture)
-{
-	unselected.setTexture(_newTexture);
+    return latterTexture;
 }
 
-void Toolbox::TextureButton::update
-(sf::Event &_event)
+bool TextureButton::isMouseSelecting()
 {
-	updateMouse(_event, selected);
-	updateMouse(_event, unselected);
+    Vector2f mousePosition{ Vector2f(Mouse::getPosition(*window)) };
+    return getGlobalBounds().contains(mousePosition);
+}
+
+void TextureButton::update(sf::Event &_event)
+{
+	updateMouse(_event, isMouseSelecting());
 	updateKeyboard(_event);
-	selected.setPosition(position);
-	unselected.setPosition(position);
-}
-void Toolbox::TextureButton::draw()
-{
-	if (isSelected == true)
-		window->draw(unselected);
-	else
-		window->draw(selected);
 }

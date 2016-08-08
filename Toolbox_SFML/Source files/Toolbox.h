@@ -1,37 +1,45 @@
 #pragma once
-#include "SFML\Graphics.hpp"
 #include "Button.h"
 #include <string>
 #include <iostream>
 
-class Toolbox
+using namespace sf;
+
+namespace tb
 {
-public:
-	class TextButton :public Button
-	{
-		void setPrimaryDimensions(sf::RenderWindow &_window, const sf::Vector2f _position, const std::string _name);
-		void updateTextColor();
-		std::string name;
-		sf::Font font;
-		sf::Text text;
-		sf::Color textColor, selectedTextColor;
-	public:
-		TextButton(sf::RenderWindow &_window, const sf::Vector2f _position, const std::string _name);
-		void setTextOptions(const std::string _fontName, const sf::Color _textColor, const sf::Color _selectedTextColor, const int _fontSize);
-		void setTextColor(const sf::Color _color);
-		void setSelectedTextColor(const sf::Color _color);
-		void update(sf::Event &_event);
-		void draw();
+    class TextButton :public Text, public Button
+    {
+        void updateColor();
+        Color primaryColor, latterColor;
+    public:
+        TextButton(RenderWindow &_window, const String &string, const Font &font, unsigned int characterSize = 30)
+            : Text{ string, font, characterSize }, Button{ _window }, latterColor{ Color::Blue }, primaryColor{Color::White} {}
+        TextButton(RenderWindow &window) :Text{}, Button{ window }, latterColor{ Color::Blue }, primaryColor{ Color::White } {}
+		void setLatterColor(const Color &_color);
+        const Color& getLatterColor();
+        bool isMouseSelecting();
+		void update(Event &_event);
 	};
-	class TextureButton :public Button
+	class TextureButton :public Sprite, public Button
 	{
-		void setPrimaryDimensions(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture &_selected, const sf::Texture &_unselected);
-		sf::Sprite selected, unselected;
+        void updateTexture();
+		Texture primaryTexture, latterTexture;
 	public:
-		TextureButton(sf::RenderWindow &_window, const sf::Vector2f _position, const sf::Texture &_selected, const sf::Texture &_unselected);
-		void setButtonTexture(sf::Texture &_newTexture);
-		void setSelectedButtonTexture(sf::Texture &_newTexture);
+        TextureButton(sf::RenderWindow &_window) :Sprite(), Button(_window) {}
+        TextureButton(sf::RenderWindow &_window, const Texture &_primary, const Texture &_latter) :Sprite(_primary), Button(_window),
+            primaryTexture{ _primary }, latterTexture{_latter} {}
+        void setLatterTexture(const sf::Texture &_texture); 
+        const Texture& getLatterTexture();
+        bool isMouseSelecting();
 		void update(sf::Event &_event);
-		void draw();
 	};
-};
+	class Label :public Text
+	{
+        Label(String &string, const Font &font, unsigned int characterSize = 30)
+            : Text{ string, font, characterSize }{}
+        Label(RenderWindow &window) :Text() {}
+	};
+	class TextBox :public Text
+	{
+	};
+}

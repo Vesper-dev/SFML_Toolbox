@@ -1,4 +1,4 @@
-#include "Source files\Toolbox.h"
+#include "Source files/Toolbox.h"
 
 void pressKey(sf::Event &event, sf::Keyboard::Key key)
 {
@@ -12,7 +12,7 @@ void pressMouseButton(sf::Event &event)
 	event.mouseButton.button = sf::Mouse::Left;
 }
 
-bool textButtonTest(sf::RenderWindow &window, sf::Event &event, Toolbox::TextButton &button)
+bool textButtonTest(sf::RenderWindow &window, sf::Event &event, tb::TextButton &button)
 {
 	button.setPosition(sf::Vector2f(100,100));
 	sf::Mouse::setPosition(sf::Vector2i(0, 0), window);
@@ -45,10 +45,9 @@ bool textButtonTest(sf::RenderWindow &window, sf::Event &event, Toolbox::TextBut
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-	sf::Texture selected, unselected;
-	selected.loadFromFile("selected.png");
-	unselected.loadFromFile("unselected.png");
-	Toolbox::TextureButton button(window, sf::Vector2f(100, 100), selected, unselected);
+    sf::Font font;
+    font.loadFromFile("OpenSans-Bold.ttf");
+    tb::TextButton x(window, "Przycisk", font, 30);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -58,11 +57,11 @@ int main()
 				window.close();
 			if (event.type == sf::Event::Closed)
 				window.close();
-			button.update(event);
+            x.update(event);
 		}
 
-		window.clear(sf::Color::White);
-		button.draw();
+		window.clear(sf::Color::Black);
+        window.draw(x);
 		window.display();
 	}
 	std::cin.get();

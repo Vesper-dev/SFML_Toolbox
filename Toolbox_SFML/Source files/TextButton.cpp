@@ -1,64 +1,38 @@
 #include "Toolbox.h"
 
-void Toolbox::TextButton::setPrimaryDimensions
-(sf::RenderWindow &_window, const sf::Vector2f _position, const std::string _name)
+using namespace tb;
+
+void TextButton::updateColor()
 {
-	window = &_window;
-	position = _position;
-	name = _name;
-	key = sf::Keyboard::Return;
+    if (isSelected == false && getColor() == latterColor)
+        setColor(primaryColor);
+    if (isSelected == true) 
+        setColor(latterColor);
+    else 
+        primaryColor = getColor();
 }
 
-void Toolbox::TextButton::updateTextColor()
+void TextButton::setLatterColor
+(const Color &_color)
 {
-	if (isSelected == true)
-		text.setColor(selectedTextColor);
-	else
-		text.setColor(textColor);
+	latterColor = _color;
 }
 
-Toolbox::TextButton::TextButton
-(sf::RenderWindow &_window, const sf::Vector2f _position, const std::string _name)
+const Color& TextButton::getLatterColor()
 {
-	clearAllStates();
-	setPrimaryDimensions(_window, _position, _name);
-	setTextOptions("OpenSans-Bold.ttf", sf::Color::Black, sf::Color::Blue, 30);
+    return latterColor;
 }
 
-void Toolbox::TextButton::setTextOptions
-(const std::string _fontName, const sf::Color _textColor, const sf::Color _selectedTextColor, const int _fontSize)
+bool TextButton::isMouseSelecting()
 {
-	if (font.loadFromFile(_fontName) == false)
-		std::cerr << "Could not open font: " << _fontName << "\n";
-	text = sf::Text(name, font, _fontSize);
-	text.setPosition(position);
-	textColor = _textColor;
-	selectedTextColor = _selectedTextColor;
-	text.setColor(textColor);
+    Vector2f mousePosition{ Vector2f(Mouse::getPosition(*window)) };
+    return getGlobalBounds().contains(mousePosition);
 }
 
-void Toolbox::TextButton::setTextColor
-(const sf::Color _color)
+void TextButton::update
+(Event &_event)
 {
-	textColor = _color;
-}
-
-void Toolbox::TextButton::setSelectedTextColor
-(const sf::Color _color)
-{
-	selectedTextColor = _color;
-}
-
-void Toolbox::TextButton::update
-(sf::Event &_event)
-{
-	updateMouse(_event, text);
+	updateMouse(_event, isMouseSelecting());
 	updateKeyboard(_event);
-	updateTextColor();
-	text.setPosition(position);
-}
-
-void Toolbox::TextButton::draw()
-{
-	window->draw(text);
+	updateColor();
 }

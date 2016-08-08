@@ -123,7 +123,6 @@
     <ClCompile Include="tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source files\Box.h" />
     <ClInclude Include="Source files\Button.h" />
     <ClInclude Include="Source files\Toolbox.h" />
   </ItemGroup>
